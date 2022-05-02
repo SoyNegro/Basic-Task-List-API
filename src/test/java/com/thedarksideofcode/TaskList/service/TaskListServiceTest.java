@@ -79,4 +79,12 @@ public class TaskListServiceTest {
     void givenWrongBasicTaskToUpdateShouldReturnBadRequest(){
         assertThat(taskListService.update(new BasicTask("Bad Request"))).isEqualTo(badRequestResponseEntity);
     }
+
+    @Test
+    void givenBasicTaskIdToDeleteShouldReturnDeleteMessage(){
+        when(basicTaskRepository.existsById("EasyTaskId")).thenReturn(true);
+        assertThat(taskListService.delete("EasyTaskId")).isEqualTo(
+                new ResponseEntity<>("Deleted successfully", HttpStatus.OK)
+        );
+    }
 }
