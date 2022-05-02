@@ -74,4 +74,9 @@ public class TaskListServiceTest {
                 .isEqualTo(okResponseEntity);
 
     }
+
+    @Test
+    void givenWrongBasicTaskToUpdateShouldReturnBadRequest(){
+        assertThat(taskListService.update(new BasicTask("Bad Request"))).isEqualTo(badRequestResponseEntity);
+    }
 }
