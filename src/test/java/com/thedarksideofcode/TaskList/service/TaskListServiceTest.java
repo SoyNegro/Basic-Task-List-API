@@ -65,4 +65,13 @@ public class TaskListServiceTest {
         when(basicTaskRepository.existsByTask(basicTask1.getTask())).thenReturn(true);
         assertThat(taskListService.create(basicTask1)).isEqualTo(badRequestResponseEntity);
     }
+
+    @Test
+    void givenBasicTaskToUpdateShouldReturnUpdatedTask(){
+        when(basicTaskRepository.findById("EasyFakeId2")).thenReturn(Optional.of(basicTask1));
+        assertThat(taskListService
+                .update(new BasicTask("EasyFakeId2","Updating Basic Task")))
+                .isEqualTo(okResponseEntity);
+
+    }
 }
