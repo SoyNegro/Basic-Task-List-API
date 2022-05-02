@@ -17,4 +17,11 @@ public class TaskListService {
     public ResponseEntity<List<BasicTask>> getAll() {
         return new ResponseEntity<>(basicTaskRepository.findAll(), HttpStatus.OK);
     }
+
+    public ResponseEntity<BasicTask> getTaskById(String id) {
+       if (id==null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return basicTaskRepository.findById(id)
+                .map(basicTask -> new ResponseEntity<>(basicTask,HttpStatus.OK))
+                .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }

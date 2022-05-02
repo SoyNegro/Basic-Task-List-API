@@ -4,6 +4,7 @@ import com.thedarksideofcode.TaskList.model.BasicTask;
 import com.thedarksideofcode.TaskList.service.TaskListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +21,10 @@ public class TaskListController {
     @GetMapping("/tasks")
     public ResponseEntity<List<BasicTask>> getAllTasks(){
       return taskListService.getAll();
+    }
+
+    @GetMapping("/task/{id}")
+    public ResponseEntity<BasicTask> getTaskById(@PathVariable String id){
+        return taskListService.getTaskById(id);
     }
 }
