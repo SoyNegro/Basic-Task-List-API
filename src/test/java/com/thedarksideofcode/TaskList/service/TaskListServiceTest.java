@@ -59,4 +59,10 @@ public class TaskListServiceTest {
         assertThat(taskListService.create(basicTask1)).isEqualTo(createdResponseEntity);
         verify(basicTaskRepository,times(1)).save(any());
     }
+
+    @Test
+    void givenBasicTaskToAddWithExistingTaskShouldReturnBadRequest(){
+        when(basicTaskRepository.existsByTask(basicTask1.getTask())).thenReturn(true);
+        assertThat(taskListService.create(basicTask1)).isEqualTo(badRequestResponseEntity);
+    }
 }
