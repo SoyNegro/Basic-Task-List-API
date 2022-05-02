@@ -10,10 +10,15 @@ import javax.validation.constraints.Size;
 public class BasicTask {
     @Id
     private String id;
-    @NotNull
+
     @Size(min = 3, max = 300)
     private String Task;
+
     public BasicTask() {
+    }
+
+    public BasicTask(String task){
+        this.Task = task;
     }
 
     public BasicTask(String id, String task){

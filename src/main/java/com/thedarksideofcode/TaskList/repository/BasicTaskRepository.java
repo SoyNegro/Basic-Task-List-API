@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BasicTaskRepository extends MongoRepository<BasicTask,String> {
+    boolean existsByTask(String task);
 }
