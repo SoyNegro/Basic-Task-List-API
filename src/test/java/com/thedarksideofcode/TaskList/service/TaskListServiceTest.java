@@ -52,4 +52,11 @@ public class TaskListServiceTest {
         assertThat(taskListService.getTaskById("AnyId")).isEqualTo(notFoundResponseEntity);
         verify(basicTaskRepository,times(1)).findById("AnyId");
     }
+
+    @Test
+    void givenBasicTaskToSaveShouldReturnSavedBasicTask(){
+        when(basicTaskRepository.save(any())).thenReturn(basicTask1);
+        assertThat(taskListService.create(basicTask1)).isEqualTo(createdResponseEntity);
+        verify(basicTaskRepository,times(1)).save(any());
+    }
 }
