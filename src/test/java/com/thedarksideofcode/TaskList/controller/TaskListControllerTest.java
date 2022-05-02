@@ -1,18 +1,29 @@
 package com.thedarksideofcode.TaskList.controller;
 
+import com.thedarksideofcode.TaskList.service.TaskListService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = TaskListController.class)
 @ExtendWith(MockitoExtension.class)
 public class TaskListControllerTest {
 
+    @Autowired
+    MockMvc mockMvc;
+
+    @MockBean
+    TaskListService taskListService;
 
     @Test
-    void getAllTasks(){
-
+    void getAllTasks() throws Exception{
+      mockMvc.perform(get("/api/tasks")).andExpect(status().is2xxSuccessful());
     }
 
     @Test
