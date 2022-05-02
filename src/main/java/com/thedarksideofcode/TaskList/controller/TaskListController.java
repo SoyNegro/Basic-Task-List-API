@@ -30,4 +30,9 @@ public class TaskListController {
     public ResponseEntity<BasicTask> createTask(@Valid @RequestBody BasicTask basicTask){
         return taskListService.create(basicTask);
     }
+
+    @PutMapping("/task")
+    public ResponseEntity<BasicTask> updateTask(@Valid @RequestBody BasicTask basicTask){
+        return taskListService.update(basicTask);
+    }
 }

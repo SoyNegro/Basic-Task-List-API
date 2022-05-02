@@ -31,4 +31,16 @@ public class TaskListService {
         return new ResponseEntity<>(basicTaskRepository.save(basicTask),HttpStatus.CREATED);
 
     }
+
+    public ResponseEntity<BasicTask> update(BasicTask basicTask) {
+        if(basicTask==null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return basicTaskRepository.findById(basicTask.getId())
+                .map(bt->{
+                    bt.setTask(basicTask.getTask());
+                    return new ResponseEntity<>(bt,HttpStatus.OK);
+                }).orElseGet(
+                        ()-> new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                );
+    }
 }

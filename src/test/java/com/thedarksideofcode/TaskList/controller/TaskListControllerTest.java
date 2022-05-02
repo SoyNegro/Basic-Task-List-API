@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = TaskListController.class)
@@ -44,8 +43,8 @@ public class TaskListControllerTest {
     }
 
     @Test
-    void givenWrongIdShouldReturnNotFound() throws Exception{
-        ResponseEntity<BasicTask> re = new ResponseEntity<>( HttpStatus.NOT_FOUND);
+    void givenWrongIdShouldReturnNotFound() throws Exception {
+        ResponseEntity<BasicTask> re = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         when(taskListService.getTaskById(eq("EasyFakeId"))).thenReturn(re);
         mockMvc.perform(get("/api/task/EasyFakeId")).andExpect(status().isNotFound());
     }
@@ -65,8 +64,16 @@ public class TaskListControllerTest {
     }
 
     @Test
-    void givenIdAndTaskToUpdateShouldReturnUpdatedTask() {
-
+    void givenIdAndTaskToUpdateShouldReturnUpdatedTask() throws Exception {
+        BasicTask basicTask = new BasicTask("EasyFakeId", "Prove that given an Id will return Task of Id");
+        ResponseEntity<BasicTask> re = new ResponseEntity<>(basicTask, HttpStatus.OK);
+        when(taskListService.update(any())).thenReturn(re);
+        mockMvc.perform(put("/api/task")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                "{\"Task\":\"Prove that given an Id will return Task of Id\"}"
+                        ))
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
