@@ -1,13 +1,9 @@
 package com.thedarksideofcode.TaskList.controller;
 
 import com.thedarksideofcode.TaskList.model.BasicTask;
-import com.thedarksideofcode.TaskList.repository.BasicTaskRepository;
 import com.thedarksideofcode.TaskList.service.TaskListService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,40 +28,42 @@ public class TaskListControllerTest {
     TaskListService taskListService;
 
     @Test
-    void getAllTasks() throws Exception{
-      mockMvc.perform(get("/api/tasks")).andExpect(status().is2xxSuccessful());
+    void getAllTasks() throws Exception {
+        mockMvc.perform(get("/api/tasks")).andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void givenIdShouldReturnTaskOfId() throws Exception{
-     BasicTask basicTask = new BasicTask("EasyFakeId","Prove that given an Id will return Task of Id");
-     ResponseEntity<BasicTask> re = new ResponseEntity<>(basicTask, HttpStatus.OK);
-     when(taskListService.getTaskById(eq("EasyFakeId"))).thenReturn(re);
-     mockMvc.perform(get("/api/task/"+ basicTask.getId())).andExpect(status().is2xxSuccessful());
+    void givenIdShouldReturnTaskOfId() throws Exception {
+        BasicTask basicTask = new BasicTask("EasyFakeId", "Prove that given an Id will return Task of Id");
+        ResponseEntity<BasicTask> re = new ResponseEntity<>(basicTask, HttpStatus.OK);
+        when(taskListService.getTaskById(eq("EasyFakeId"))).thenReturn(re);
+        mockMvc.perform(get("/api/task/" + basicTask.getId())).andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void givenWrongIdShouldReturnNotFound(){
-
+    void givenWrongIdShouldReturnNotFound() throws Exception{
+        ResponseEntity<BasicTask> re = new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        when(taskListService.getTaskById(eq("EasyFakeId"))).thenReturn(re);
+        mockMvc.perform(get("/api/task/EasyFakeId")).andExpect(status().isNotFound());
     }
 
     @Test
-    void givenTaskToSaveShouldReturnSavedTask(){
-
-    }
-
-    @Test
-    void givenIdAndTaskToUpdateShouldReturnUpdatedTask(){
-
-    }
-
-    @Test
-    void givenIdAndEmptyTaskToUpdateShouldReturnInvalidTask(){
+    void givenTaskToSaveShouldReturnSavedTask() {
 
     }
 
     @Test
-    void givenIdToDeleteShouldDeleteTaskOfId(){
+    void givenIdAndTaskToUpdateShouldReturnUpdatedTask() {
+
+    }
+
+    @Test
+    void givenIdAndEmptyTaskToUpdateShouldReturnInvalidTask() {
+
+    }
+
+    @Test
+    void givenIdToDeleteShouldDeleteTaskOfId() {
 
     }
 }
