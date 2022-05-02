@@ -87,4 +87,9 @@ public class TaskListServiceTest {
                 new ResponseEntity<>("Deleted successfully", HttpStatus.OK)
         );
     }
+
+    @Test
+    void givenIdToDeleteNotFoundShouldReturnNotFound(){
+        assertThat(taskListService.delete("EasyFakeId")).isEqualTo(notFoundResponseEntity);
+    }
 }
