@@ -33,7 +33,7 @@ public class TaskListService {
     }
 
     public ResponseEntity<BasicTask> update(BasicTask basicTask) {
-        if(basicTask==null)
+        if(basicTask==null||basicTask.getId()==null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return basicTaskRepository.findById(basicTask.getId())
                 .map(bt->{
@@ -42,5 +42,14 @@ public class TaskListService {
                 }).orElseGet(
                         ()-> new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 );
+    }
+
+    public ResponseEntity<String> delete(String id) {
+        if (id==null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (basicTaskRepository.existsById(id)){
+            basicTaskRepository.deleteById(id);
+            return new ResponseEntity<>("Deleted successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

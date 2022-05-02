@@ -77,12 +77,22 @@ public class TaskListControllerTest {
     }
 
     @Test
-    void givenIdAndEmptyTaskToUpdateShouldReturnInvalidTask() {
-
+    void givenIdAndEmptyTaskToUpdateShouldReturnInvalidTask() throws Exception {
+        when(taskListService.update(any())).thenReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+        mockMvc.perform(put("/api/task")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                "{}"
+                        ))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    void givenIdToDeleteShouldDeleteTaskOfId() {
-
+    void givenIdToDeleteShouldDeleteTaskOfId() throws Exception {
+        when(taskListService.delete("EasyFakeId"))
+                .thenReturn(new ResponseEntity<>("Deleted Successfully", HttpStatus.OK));
+        mockMvc.perform(delete("/api/task/EasyFakeId"))
+                .andExpect(status().is2xxSuccessful());
     }
 }
+

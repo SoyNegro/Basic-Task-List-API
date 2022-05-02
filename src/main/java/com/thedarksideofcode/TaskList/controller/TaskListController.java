@@ -35,4 +35,9 @@ public class TaskListController {
     public ResponseEntity<BasicTask> updateTask(@Valid @RequestBody BasicTask basicTask){
         return taskListService.update(basicTask);
     }
+
+    @DeleteMapping("/task/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable String id){
+        return taskListService.delete(id);
+    }
 }
